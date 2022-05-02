@@ -8,20 +8,24 @@ import Root from "./navigation/Root";
 import { darkTheme, lightTheme } from "./styled";
 import { ThemeProvider } from "styled-components";
 import { useColorScheme } from "react-native";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 export default function App() {
-  const isDark = useColorScheme() === "dark";
+  const queryClient = new QueryClient();
 
+  const isDark = useColorScheme() === "dark";
   const [loaded] = Font.useFonts(Ionicons.font);
   const [assets] = useAssets(["https://reactnative.dev/img/oss_logo.png"]);
   if (!loaded || !assets) {
     return <AppLoading />;
   }
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
