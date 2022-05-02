@@ -17,6 +17,7 @@ const Tabs = () => {
         backgroundColor: isDark ? colors.BLACK_COLOR : "white",
       }}
       screenOptions={{
+        unmountOnBlur: true,
         tabBarStyle: {
           backgroundColor: isDark ? colors.BLACK_COLOR : "white",
         },
