@@ -13,6 +13,9 @@ const Tabs = () => {
   return (
     // screen Options: 모든 탭에 적용할 옵션이다!
     <Tab.Navigator
+      sceneContainerStyle={{
+        backgroundColor: isDark ? colors.BLACK_COLOR : "white",
+      }}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: isDark ? colors.BLACK_COLOR : "white",
