@@ -3,14 +3,23 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { colors } from "../colors";
 import Detail from "../Screens/Detail";
 
+import { useColorScheme } from "react-native";
+
 const NativeStack = createNativeStackNavigator();
 
 const Stack = () => {
+  const isDark = useColorScheme() === "dark";
   return (
     <NativeStack.Navigator
       screenOptions={{
         animation: "fade",
-        headerTintColor: colors.YELLOW_COLOR,
+        headerStyle: {
+          backgroundColor: isDark ? colors.BLACK_COLOR : "white",
+        },
+        headerTitleStyle: {
+          color: isDark ? "white" : BLACK_COLOR,
+        },
+
         headerBackTitleVisible: false,
       }}
     >
