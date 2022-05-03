@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React from "react";
+>>>>>>> a5888ec6403a549c33aabe75808ca8be0192c285
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Dimensions, FlatList } from "react-native";
 import styled from "styled-components/native";

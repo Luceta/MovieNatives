@@ -42,6 +42,7 @@ export const moviesApi = {
     fetch(
       `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
     ).then((res) => res.json()),
+<<<<<<< HEAD
   search: ({ queryKey }) => {
     const [_, query] = queryKey;
 
@@ -49,6 +50,8 @@ export const moviesApi = {
       `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&query=${query}`
     ).then((res) => res.json());
   },
+=======
+>>>>>>> a5888ec6403a549c33aabe75808ca8be0192c285
 };
 
 export const tvApi = {
@@ -64,6 +67,7 @@ export const tvApi = {
     fetch(`${BASE_URL}/tv/top_rated?api_key=${API_KEY}`).then((res) =>
       res.json()
     ),
+<<<<<<< HEAD
   search: ({ queryKey }) => {
     const [_, query] = queryKey;
 
@@ -71,4 +75,6 @@ export const tvApi = {
       `${BASE_URL}/search/tv?api_key=${API_KEY}&language=en-US&page=1&query=${query}`
     ).then((res) => res.json());
   },
+=======
+>>>>>>> a5888ec6403a549c33aabe75808ca8be0192c285
 };
