@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
-import { Dimensions, Linking } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Share,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Movie, moviesApi, TV, tvApi } from "../api";
 import Poster from "../components/Poster";
 import { makeImgPath } from "../utils";
-import { StyleSheet } from "react-native";
+
 import { BLACK_COLOR } from "../colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { useQuery } from "react-query";
@@ -67,12 +73,6 @@ const Detail: React.FC<DetailScreenProps> = ({
   navigation: { setOptions },
   route: { params },
 }) => {
-  useEffect(() => {
-    setOptions({
-      title: "original_title" in params ? "Movie" : "TV Show",
-    });
-  }, []);
-
   const isMovie = "original_title" in params;
   const { isLoading, data } = useQuery(
     [isMovie ? "movies" : "tv", params.id],
@@ -81,10 +81,54 @@ const Detail: React.FC<DetailScreenProps> = ({
 
   const openYoutubeLink = async (videoId: string) => {
     const baseUrl = `https://m.youtube.com/watch?v=${videoId}`;
-    console.log(baseUrl, "check url");
     // await Linking.openURL(baseUrl);
     await WebBrowser.openBrowserAsync(baseUrl);
   };
+
+  const shareMedia = async () => {
+    const isAndroid = Platform.OS === "android";
+
+    const homepage = isMovie
+      ? `https://www.imdb.com/title/${data.imdb_id}/`
+      : data.homepage;
+
+    if (isAndroid) {
+      await Share.share({
+        message: `${params.overview}\nCheck it out: ${homepage}`,
+        title:
+          "original_title" in params
+            ? params.original_title
+            : params.original_name,
+      });
+    } else {
+      await Share.share({
+        url: homepage,
+        title:
+          "original_title" in params
+            ? params.original_title
+            : params.original_name,
+      });
+    }
+  };
+
+  const ShareButton = () => (
+    <TouchableOpacity onPress={shareMedia}>
+      <Ionicons name="share-outline" color="white" size={24} />
+    </TouchableOpacity>
+  );
+  useEffect(() => {
+    setOptions({
+      title: "original_title" in params ? "Movie" : "TV Show",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setOptions({
+        headerRight: () => <ShareButton />,
+      });
+    }
+  }, [data]);
 
   return (
     <Container>
