@@ -6,3 +6,12 @@ export const makeImgPath = (img: string, width: string = "w500") => {
   }
   return src;
 };
+
+export const loadMore = (
+  hasNextPage: boolean | undefined,
+  fetchNextPage: any
+) => {
+  if (hasNextPage) {
+    fetchNextPage();
+  }
+};
